@@ -1,0 +1,87 @@
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
+
+void registrar() {
+    ofstream archivo("estudiantes.txt", ios::app);
+    string nombre, codigo;
+    double nota;
+
+    cout << "Nombre: ";
+    cin.ignore();
+    getline(cin, nombre);
+    cout << "Código: ";
+    cin >> codigo;
+    cout << "Nota: ";
+    cin >> nota;
+
+    archivo << nombre << "," << codigo << "," << nota << endl;
+    archivo.close();
+}
+
+void listar() {
+    ifstream archivo("estudiantes.txt");
+    string linea;
+
+    while (getline(archivo, linea)) {
+        cout << linea << endl;
+    }
+
+    archivo.close();
+}
+
+void buscar() {
+    ifstream archivo("estudiantes.txt");
+    string linea, codigo;
+
+    cout << "Ingrese código a buscar: ";
+    cin >> codigo;
+
+    while (getline(archivo, linea)) {
+        if (linea.find(codigo) != string::npos) {
+            cout << "Encontrado: " << linea << endl;
+        }
+    }
+
+    archivo.close();
+}
+
+void promedio() {
+    ifstream archivo("estudiantes.txt");
+    string nombre, codigo;
+    double nota, suma = 0;
+    int count = 0;
+
+    while (archivo >> nombre >> codigo >> nota) {
+        suma += nota;
+        count++;
+    }
+
+    if (count > 0)
+        cout << "Promedio general: " << suma / count << endl;
+    else
+        cout << "No hay datos." << endl;
+
+    archivo.close();
+}
+
+int main() {
+    int op;
+
+    do {
+        cout << "\n1. Registrar\n2. Listar\n3. Buscar\n4. Promedio\n0. Salir\nOpción: ";
+        cin >> op;
+
+        switch (op) {
+            case 1: registrar(); break;
+            case 2: listar(); break;
+            case 3: buscar(); break;
+            case 4: promedio(); break;
+        }
+    } while (op != 0);
+
+    return 0;
+}
