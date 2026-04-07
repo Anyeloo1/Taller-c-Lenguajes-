@@ -1,0 +1,27 @@
+#include <iostream>
+#include <stdexcept>
+using namespace std;
+
+int main() {
+    try {
+        int numero;
+        cout << "Ingrese un número entero: ";
+        cin >> numero;
+
+        if (cin.fail()) {
+            throw invalid_argument("Entrada no válida");
+        }
+
+        if (numero < 0) {
+            throw runtime_error("El número no puede ser negativo");
+        }
+
+        cout << "Número válido: " << numero << endl;
+
+    } catch (exception &e) {
+        cout << "Error: " << e.what() << endl;
+    }
+
+    return 0;
+}
+
